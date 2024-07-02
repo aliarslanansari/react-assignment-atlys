@@ -17,8 +17,13 @@ const LoginPage = () => {
             </span>
             <span className="mb-11 font-semibold text-white">Log into your account</span>
           </div>
-          <Textfield label="Email or Username" placeholder="Enter your email or username" />
           <Textfield
+            type="text"
+            label="Email or Username"
+            placeholder="Enter your email or username"
+          />
+          <Textfield
+            type="password"
             className="mt-4"
             label="Password"
             placeholder="Enter your password"

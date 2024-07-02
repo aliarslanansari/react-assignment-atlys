@@ -6,6 +6,15 @@
 
 @layer base {
     body {
+
+        input:-webkit-autofill,
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px #475569 inset !important;
+            -webkit-text-fill-color: #fff;
+        }
+
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
         @apply font-inter bg-black-800 text-white;
     }
 }

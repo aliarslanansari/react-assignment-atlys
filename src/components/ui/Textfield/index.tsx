@@ -1,8 +1,10 @@
+import EyeIcon from "@/assets/svg-components/EyeIcon";
 import { cx } from "class-variance-authority";
-import { useId } from "react";
+import { useId, useState } from "react";
 
 interface TextfieldProps {
   label: string;
+  type: React.HTMLInputTypeAttribute | undefined;
   placeholder?: string;
   className?: string;
   labelClassName?: string;
@@ -10,6 +12,7 @@ interface TextfieldProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
   value?: string;
   rightLabel?: string | JSX.Element;
+  rightLabelClassName?: string | JSX.Element;
 }
 
 const Textfield = ({
@@ -18,11 +21,18 @@ const Textfield = ({
   className,
   labelClassName,
   inputClassName,
+  rightLabelClassName,
   onChange,
   value,
   rightLabel,
+  type,
 }: TextfieldProps) => {
   const id = useId();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   return (
     <div className={cx("flex flex-col", className)}>
@@ -34,20 +44,38 @@ const Textfield = ({
           {label}
         </label>
         {rightLabel && (
-          <div className="mb-2.5 text-xs font-medium leading-none text-white-200">{rightLabel}</div>
+          <div
+            className={cx(
+              "mb-2.5 text-xs font-medium leading-none text-white-200",
+              rightLabelClassName,
+            )}
+          >
+            {rightLabel}
+          </div>
         )}
       </div>
-      <input
-        id={id}
-        name={id}
-        onChange={onChange}
-        value={value}
-        className={cx(
-          "rounded-md border-2 border-white-250 bg-transparent p-3 placeholder:text-base placeholder:font-normal placeholder:text-white-150",
-          inputClassName,
+      <div className="relative w-full">
+        <input
+          type={type === "password" && isPasswordVisible ? "text" : type}
+          id={id}
+          name={id}
+          onChange={onChange}
+          value={value}
+          className={cx(
+            "w-full rounded-md border-2 border-white-250 bg-transparent p-3 outline-none placeholder:text-base placeholder:font-normal placeholder:text-white-150 focus:border-white-150",
+            inputClassName,
+          )}
+          placeholder={placeholder}
+        />
+        {type === "password" && (
+          <button
+            className="group absolute right-2.5 top-1/2 -translate-y-1/2 transform outline-none"
+            onClick={togglePasswordVisibility}
+          >
+            <EyeIcon className="group-focus:stroke-white-200" />
+          </button>
         )}
-        placeholder={placeholder}
-      />
+      </div>
     </div>
   );
 };

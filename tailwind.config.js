@@ -11,6 +11,8 @@ export default {
       },
       colors: {
         "black-800": "#131319",
+        "black-700": "#191920",
+        "black-600": "#27292d",
         "white-100": "#6b6c70",
         "white-150": "#7f8084",
         "white-200": "#c5c7ca",

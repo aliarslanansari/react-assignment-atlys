@@ -11,7 +11,7 @@ const Button = ({ onClick, label, className }: ButtonProps) => {
     <button
       onClick={onClick}
       className={cx(
-        "rounded-md bg-blue-primary p-3 text-center text-base font-medium leading-none",
+        "rounded-md bg-blue-primary p-3 text-center text-base font-medium leading-none outline-none hover:bg-blue-primary/80 focus:bg-blue-primary/80",
         className,
       )}
     >

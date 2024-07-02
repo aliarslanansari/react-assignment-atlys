@@ -3,8 +3,8 @@ import { cx } from "class-variance-authority";
 import { useId, useState } from "react";
 
 interface TextfieldProps {
-  label: string;
-  type: React.HTMLInputTypeAttribute | undefined;
+  label?: string;
+  type?: React.HTMLInputTypeAttribute;
   placeholder?: string;
   className?: string;
   labelClassName?: string;
@@ -36,24 +36,31 @@ const Textfield = ({
 
   return (
     <div className={cx("flex flex-col", className)}>
-      <div className="flex items-end justify-between">
-        <label
-          htmlFor={id}
-          className={cx("mb-2.5 text-sm font-medium leading-none text-white-200", labelClassName)}
-        >
-          {label}
-        </label>
-        {rightLabel && (
-          <div
-            className={cx(
-              "mb-2.5 text-xs font-medium leading-none text-white-200",
-              rightLabelClassName,
-            )}
-          >
-            {rightLabel}
-          </div>
-        )}
-      </div>
+      {(rightLabel || label) && (
+        <div className="flex items-end justify-between">
+          {label && (
+            <label
+              htmlFor={id}
+              className={cx(
+                "mb-2.5 text-sm font-medium leading-none text-white-200",
+                labelClassName,
+              )}
+            >
+              {label}
+            </label>
+          )}
+          {rightLabel && (
+            <div
+              className={cx(
+                "mb-2.5 text-xs font-medium leading-none text-white-200",
+                rightLabelClassName,
+              )}
+            >
+              {rightLabel}
+            </div>
+          )}
+        </div>
+      )}
       <div className="relative w-full">
         <input
           type={type === "password" && isPasswordVisible ? "text" : type}

@@ -1,4 +1,5 @@
 import PrivateRoute from "@/components/PrivateRoute";
+import PublicRoute from "@/components/PublicRoute";
 import Loader from "@/components/ui/Loader";
 import { ComponentType, ReactElement, Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -14,6 +15,7 @@ interface RouteType<Props = object> {
   children?: RouteType[];
   props?: object;
   isProtected?: boolean;
+  isPublic?: boolean;
 }
 
 const routes: RouteType[] = [
@@ -21,6 +23,7 @@ const routes: RouteType[] = [
     path: "/",
     Element: LoginPage,
     isProtected: false,
+    isPublic: true,
   },
   {
     path: "/forgot-password",
@@ -47,13 +50,17 @@ function renderRoutes(routes: RouteType[]): ReactElement[] {
           <route.Element {...route.props} />
         </Suspense>
       );
-      return (
-        <Route
-          key={route.path}
-          path={route.path}
-          element={route.isProtected ? <PrivateRoute element={Element} /> : Element}
-        />
-      );
+      if (route.isProtected) {
+        return (
+          <Route key={route.path} path={route.path} element={<PrivateRoute element={Element} />} />
+        );
+      } else if (route.isPublic) {
+        return (
+          <Route key={route.path} path={route.path} element={<PublicRoute element={Element} />} />
+        );
+      } else {
+        return <Route key={route.path} path={route.path} element={Element} />;
+      }
     } else {
       return (
         <Route key={route.path} element={<route.Element />}>

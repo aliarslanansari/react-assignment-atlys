@@ -4,13 +4,16 @@ import Textfield from "../ui/Textfield";
 
 const LoginFormCard = () => {
   const navigate = useNavigate();
-  const onLogin = () => {
+  const onLogin = (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
     navigate("/feed");
   };
 
   return (
-    <div className="bg-gradient-2 w-full max-w-[464px] rounded-lg p-0.5">
-      <div className="flex w-full flex-col rounded-lg bg-gradient-1 px-5 py-9">
+    <div className="w-full max-w-[464px] rounded-lg bg-gradient-2 p-0.5">
+      <form onSubmit={onLogin} className="flex w-full flex-col rounded-lg bg-gradient-1 px-5 py-9">
         <div className="flex flex-col items-center">
           <span className="mb-2 text-sm font-medium -tracking-tight text-white-100">
             WELCOME BACK
@@ -38,7 +41,7 @@ const LoginFormCard = () => {
             </Link>
           </span>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

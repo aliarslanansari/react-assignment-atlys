@@ -4,7 +4,7 @@ import PostTextField from "@/components/PostTextField";
 
 const PostFeedPage = () => {
   return (
-    <div className="m-auto max-w-[700px] py-[70px]">
+    <main className="m-auto max-w-[700px] py-[70px]">
       <PostFeedHeader className="mb-10" />
       <PostTextField className="mb-4" />
       <div className="flex flex-col gap-4">
@@ -13,7 +13,7 @@ const PostFeedPage = () => {
         <PostCard />
         <PostCard />
       </div>
-    </div>
+    </main>
   );
 };
 

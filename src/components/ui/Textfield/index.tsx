@@ -13,6 +13,7 @@ interface TextfieldProps {
   value?: string;
   rightLabel?: string | JSX.Element;
   rightLabelClassName?: string | JSX.Element;
+  required?: boolean;
 }
 
 const Textfield = ({
@@ -26,6 +27,7 @@ const Textfield = ({
   value,
   rightLabel,
   type,
+  required,
 }: TextfieldProps) => {
   const id = useId();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -66,6 +68,7 @@ const Textfield = ({
           type={type === "password" && isPasswordVisible ? "text" : type}
           id={id}
           name={id}
+          required={required}
           onChange={onChange}
           value={value}
           className={cx(
@@ -73,6 +76,7 @@ const Textfield = ({
             inputClassName,
           )}
           placeholder={placeholder}
+          aria-label={placeholder}
         />
         {type === "password" && (
           <button

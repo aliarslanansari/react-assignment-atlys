@@ -17,9 +17,7 @@ const LoginFormCard = () => {
       if (emailOrUsername === env.REACT_LOGIN_USERNAME && password === env.REACT_LOGIN_PASSWORD) {
         navigate("/feed");
       } else {
-        toast.error(
-          "There was a problem logging in. Check your email and password or create an account.",
-        );
+        toast.error("There was a problem logging in. Check your credentials or create an account.");
       }
     },
   });

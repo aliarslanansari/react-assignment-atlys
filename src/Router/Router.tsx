@@ -8,20 +8,27 @@ const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPasswordPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 const PostFeedPage = lazy(() => import("@/pages/PostFeedPage"));
+const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
 
 interface RouteType<Props = object> {
   path: string;
   Element: ComponentType<Props>;
   children?: RouteType[];
   props?: object;
-  isProtected?: boolean;
-  isPublic?: boolean;
+  isProtected?: boolean; // protected pages can be visited by only logged-in users
+  isPublic?: boolean; // public pages can be visited by only non-logged-in users
 }
 
 const routes: RouteType[] = [
   {
     path: "/",
     Element: LoginPage,
+    isProtected: false,
+    isPublic: true,
+  },
+  {
+    path: "/register",
+    Element: RegisterPage,
     isProtected: false,
     isPublic: true,
   },

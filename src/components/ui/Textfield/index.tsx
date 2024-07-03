@@ -96,6 +96,7 @@ const Textfield = ({
           </button>
         )}
       </div>
+      <p className="mt-1 text-xs text-red-400">{error}</p>
     </div>
   );
 };

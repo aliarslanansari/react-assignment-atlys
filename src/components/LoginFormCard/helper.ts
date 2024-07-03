@@ -6,6 +6,6 @@ export const loginFormInitialValues = {
 };
 
 export const loginSchema = Yup.object({
-  emailOrUsername: Yup.string().required("Required"),
-  password: Yup.string().required("Required"),
+  emailOrUsername: Yup.string().required("Email or username is required"),
+  password: Yup.string().required("Password is required"),
 });

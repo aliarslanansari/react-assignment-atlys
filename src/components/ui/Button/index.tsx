@@ -1,7 +1,7 @@
 import { cx } from "class-variance-authority";
 
 interface ButtonProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   label: string;
   className?: string;
   type?: "submit" | "reset" | "button";

@@ -14,6 +14,8 @@ interface TextfieldProps {
   rightLabel?: string | JSX.Element;
   rightLabelClassName?: string | JSX.Element;
   required?: boolean;
+  name?: string | undefined;
+  error?: string;
 }
 
 const Textfield = ({
@@ -28,6 +30,8 @@ const Textfield = ({
   rightLabel,
   type,
   required,
+  name,
+  error,
 }: TextfieldProps) => {
   const id = useId();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -67,19 +71,24 @@ const Textfield = ({
         <input
           type={type === "password" && isPasswordVisible ? "text" : type}
           id={id}
-          name={id}
+          name={name}
           required={required}
           onChange={onChange}
           value={value}
           className={cx(
-            "w-full rounded-md border-2 border-white-250 bg-transparent p-3 outline-none placeholder:text-base placeholder:font-normal placeholder:text-white-150 focus:border-white-150",
+            "w-full rounded-md border-2 bg-transparent p-3 outline-none placeholder:text-base placeholder:font-normal placeholder:text-white-150",
             inputClassName,
+            {
+              "border-white-250 focus:border-white-150": !error,
+              "border-red-400": error,
+            },
           )}
           placeholder={placeholder}
           aria-label={placeholder}
         />
         {type === "password" && (
           <button
+            type="button"
             className="group absolute right-2.5 top-1/2 -translate-y-1/2 transform outline-none"
             onClick={togglePasswordVisibility}
           >

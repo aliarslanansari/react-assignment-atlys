@@ -2,8 +2,7 @@ import { RootState } from "@/redux";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface User {
-  username: string;
-  email: string;
+  usernameOrEmail: string;
 }
 
 export interface AuthSlice {

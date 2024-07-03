@@ -1,4 +1,5 @@
 import env from "@/env";
+import useAuth from "@/hooks/useAuth";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -8,6 +9,7 @@ import { loginFormInitialValues, loginSchema } from "./helper";
 
 const LoginFormCard = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const formik = useFormik({
     validationSchema: loginSchema,
@@ -15,6 +17,7 @@ const LoginFormCard = () => {
     onSubmit: (values) => {
       const { emailOrUsername, password } = values;
       if (emailOrUsername === env.REACT_LOGIN_USERNAME && password === env.REACT_LOGIN_PASSWORD) {
+        login({ usernameOrEmail: emailOrUsername });
         navigate("/feed");
       } else {
         toast.error("There was a problem logging in. Check your credentials or create an account.");

@@ -1,24 +1,57 @@
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import useAuth from "@/hooks/useAuth";
+import { addUser, usersSelector } from "@/redux/slices/usersSlice";
+import { capitalize, findUser, findUserWithPassword } from "@/utils";
 import { useFormik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Button from "../ui/Button";
 import Textfield from "../ui/Textfield";
 import { registerFormInitialValues, registerSchema } from "./helper";
 
-const RegisterFormCard = () => {
+interface RegisterFormCardProps {
+  isOpenAsModal?: boolean;
+  onSuccess?(): void;
+  onLoginClick?(): void;
+}
+
+const RegisterFormCard = ({
+  isOpenAsModal = false,
+  onSuccess,
+  onLoginClick,
+}: RegisterFormCardProps) => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const dispatch = useAppDispatch();
+  const { users } = useAppSelector(usersSelector);
 
   const formik = useFormik({
     validationSchema: registerSchema,
     initialValues: registerFormInitialValues,
     onSubmit: (values) => {
       const { email, username, password } = values;
-      console.log({ username, password, email });
-      login({ usernameOrEmail: email });
-      navigate("/feed");
-      toast.success("There was a problem logging in. Check your credentials or create an account.");
+      const existingUser = findUser(users, email);
+      if (existingUser?.id) {
+        toast.error("User with same email or username already exist.", { duration: 4000 });
+      } else {
+        dispatch(
+          addUser({
+            email,
+            username,
+            password,
+            id: 0,
+            name: capitalize(username),
+            profile_picture: "/user-images/user-fallback.png",
+            createdAt: new Date().toISOString(),
+          }),
+        );
+        const user = findUserWithPassword(users, email, password);
+        if (user) {
+          login(user);
+          if (onSuccess) onSuccess();
+        }
+        if (!isOpenAsModal) navigate("/feed");
+      }
     },
   });
 
@@ -65,9 +98,13 @@ const RegisterFormCard = () => {
         <div className="mt-3">
           <span className="text-sm font-medium leading-none text-white-150">
             Already have an account?{" "}
-            <Link to={"/"} className="text-white-200">
+            <button
+              type="button"
+              onClick={isOpenAsModal ? onLoginClick : () => navigate("/login")}
+              className="text-sm font-medium leading-none text-white-200"
+            >
               Login →
-            </Link>
+            </button>
           </span>
         </div>
       </form>

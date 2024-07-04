@@ -1,6 +1,6 @@
 import App from "@/App.tsx";
 import "@/assets/styles/global.scss";
-import { persistor, store } from "@/redux";
+import { persistor, store } from "@/redux/store";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";

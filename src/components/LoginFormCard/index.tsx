@@ -1,5 +1,7 @@
-import env from "@/env";
+import { useAppSelector } from "@/hooks/redux";
 import useAuth from "@/hooks/useAuth";
+import { usersSelector } from "@/redux/slices/usersSlice";
+import { findUserWithPassword } from "@/utils";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -7,18 +9,31 @@ import Button from "../ui/Button";
 import Textfield from "../ui/Textfield";
 import { loginFormInitialValues, loginSchema } from "./helper";
 
-const LoginFormCard = () => {
+interface LoginFormCardProps {
+  isOpenAsModal?: boolean;
+  onSuccess?(): void;
+  onRegisterClick?(): void;
+}
+
+const LoginFormCard = ({
+  isOpenAsModal = false,
+  onSuccess,
+  onRegisterClick,
+}: LoginFormCardProps) => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { users } = useAppSelector(usersSelector);
 
   const formik = useFormik({
     validationSchema: loginSchema,
     initialValues: loginFormInitialValues,
     onSubmit: (values) => {
       const { emailOrUsername, password } = values;
-      if (emailOrUsername === env.REACT_LOGIN_USERNAME && password === env.REACT_LOGIN_PASSWORD) {
-        login({ usernameOrEmail: emailOrUsername });
-        navigate("/feed");
+      const user = findUserWithPassword(users, emailOrUsername, password);
+      if (user) {
+        login(user);
+        if (onSuccess) onSuccess();
+        if (!isOpenAsModal) navigate("/feed");
       } else {
         toast.error("There was a problem logging in. Check your credentials or create an account.");
       }
@@ -61,9 +76,13 @@ const LoginFormCard = () => {
         <div className="mt-3">
           <span className="text-sm font-medium leading-none text-white-150">
             Not registered yet?{" "}
-            <Link to={"/register"} className="text-white-200">
+            <button
+              type="button"
+              onClick={isOpenAsModal ? onRegisterClick : () => navigate("/register")}
+              className="text-sm font-medium leading-none text-white-200"
+            >
               Register →
-            </Link>
+            </button>
           </span>
         </div>
       </form>

@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { authSelector, loginUser, logoutUser, User } from "@/redux/slices/authSlice";
+import { authSelector, loginUser, logoutUser } from "@/redux/slices/authSlice";
+import { User } from "@/redux/slices/usersSlice";
 
 const useAuth = () => {
   const dispatch = useAppDispatch();

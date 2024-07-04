@@ -3,16 +3,18 @@ import postFeedSliceReducer from "@/redux/slices/postFeedSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import usersSliceReducer from "./slices/usersSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "postFeed", "users"],
 };
 
 const rootReducer = combineReducers({
   postFeed: postFeedSliceReducer,
   auth: authSliceReducer,
+  users: usersSliceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

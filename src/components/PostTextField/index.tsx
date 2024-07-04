@@ -1,9 +1,13 @@
 import Card from "@/components/ui/Card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Textfield from "@/components/ui/Textfield";
+import { useAppDispatch } from "@/hooks/redux";
+import useAuth from "@/hooks/useAuth";
+import { addPost } from "@/redux/slices/postFeedSlice";
 import { cn } from "@/utils";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
+import { toast } from "sonner";
 import EmojiPicker from "../EmojiPicker";
 import Button from "../ui/Button";
 import IconWrapper from "../ui/IconWrapper";
@@ -11,17 +15,37 @@ import { postFormInitialValues, postFormSchema } from "./helper";
 
 interface PostTextFieldProps {
   className?: string;
+  setShowLoginModal(s: boolean): void;
 }
 
-const PostTextField = ({ className }: PostTextFieldProps) => {
+const PostTextField = ({ className, setShowLoginModal }: PostTextFieldProps) => {
   const [isEmojiPopoverOpen, setIsEmojiPopoverOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { user } = useAuth();
+  const dispatch = useAppDispatch();
+
   const formik = useFormik({
     validationSchema: postFormSchema,
     initialValues: postFormInitialValues,
     onSubmit: (values) => {
-      const { emoji, text } = values;
-      console.log({ emoji, text });
+      if (user?.id) {
+        dispatch(
+          addPost({
+            created_at: new Date().toISOString(),
+            edited_time: null,
+            emoji: values.emoji,
+            id: 0,
+            is_edited: false,
+            no_of_comments: 4,
+            text: values.text,
+            user_id: user.id,
+          }),
+        );
+        formik.resetForm();
+        toast.success("Your post was sent.", { duration: 3000 });
+      } else {
+        setShowLoginModal(true);
+      }
     },
   });
 
@@ -70,7 +94,12 @@ const PostTextField = ({ className }: PostTextFieldProps) => {
             <p className="mt-1 text-xs text-red-400">{formik.errors.text}</p>
           )}
         </div>
-        <Button type="submit" className="items-end self-end px-[38px]" label="Post" />
+        <Button
+          disabled={!formik.values.text}
+          type="submit"
+          className="items-end self-end px-[38px]"
+          label="Post"
+        />
       </form>
     </Card>
   );

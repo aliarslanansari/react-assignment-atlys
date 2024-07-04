@@ -37,9 +37,12 @@ const PostFeedPage = () => {
   return (
     <main className="m-auto max-w-[700px] py-[70px] mobile:p-5">
       {user?.id ? (
-        <button className="absolute right-2 top-0 p-4 text-xs text-white-100" onClick={logout}>
-          logout
-        </button>
+        <div className="absolute right-2 top-0 p-4 text-xs text-white-100">
+          {user?.username} •{" "}
+          <button onClick={logout} className="underline">
+            logout
+          </button>
+        </div>
       ) : (
         <button
           className="absolute right-2 top-0 p-4 text-xs text-white-100"

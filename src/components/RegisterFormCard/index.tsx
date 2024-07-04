@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import useAuth from "@/hooks/useAuth";
 import { addUser, usersSelector } from "@/redux/slices/usersSlice";
+import { store } from "@/redux/store";
 import { capitalize, findUser, findUserWithPassword } from "@/utils";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +46,7 @@ const RegisterFormCard = ({
             createdAt: new Date().toISOString(),
           }),
         );
+        const users = store.getState().users.users;
         const user = findUserWithPassword(users, email, password);
         if (user) {
           login(user);

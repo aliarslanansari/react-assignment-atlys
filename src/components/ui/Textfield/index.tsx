@@ -16,6 +16,7 @@ interface TextfieldProps {
   required?: boolean;
   name?: string | undefined;
   error?: string;
+  autoFocus?: boolean;
 }
 
 const Textfield = ({
@@ -32,6 +33,7 @@ const Textfield = ({
   required,
   name,
   error,
+  autoFocus,
 }: TextfieldProps) => {
   const id = useId();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -72,6 +74,7 @@ const Textfield = ({
           type={type === "password" && isPasswordVisible ? "text" : type}
           id={id}
           name={name}
+          autoFocus={autoFocus}
           required={required}
           onChange={onChange}
           value={value}

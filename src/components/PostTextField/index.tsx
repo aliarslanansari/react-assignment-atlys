@@ -47,6 +47,7 @@ const PostTextField = ({ className }: PostTextFieldProps) => {
             <Textfield
               onChange={formik.handleChange}
               name="text"
+              autoFocus
               className="w-full"
               value={formik.values.text}
               inputClassName="border-none pl-0 pr-0"

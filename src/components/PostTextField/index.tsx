@@ -26,8 +26,9 @@ const PostTextField = ({ className }: PostTextFieldProps) => {
   });
 
   const handleEmojiSelect = (emoji: string) => {
-    formik.setFieldValue("emoji", emoji);
     setIsEmojiPopoverOpen(false);
+    formik.setFieldValue("emoji", emoji);
+    inputRef.current?.focus();
   };
 
   const focusInputBox = () => {
@@ -47,7 +48,10 @@ const PostTextField = ({ className }: PostTextFieldProps) => {
               <PopoverTrigger>
                 <IconWrapper>{formik.values.emoji}</IconWrapper>
               </PopoverTrigger>
-              <PopoverContent className="setIsEmojiPopoverOpen w-80 rounded-lg border-none !bg-transparent p-0">
+              <PopoverContent
+                onClick={(e) => e.stopPropagation()}
+                className="setIsEmojiPopoverOpen w-80 rounded-lg border-none !bg-transparent p-0"
+              >
                 <EmojiPicker onEmojiClick={handleEmojiSelect} />
               </PopoverContent>
             </Popover>

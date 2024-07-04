@@ -1,4 +1,5 @@
 import Picker, { SkinTones, Theme } from "emoji-picker-react";
+import { MouseDownEvent } from "emoji-picker-react/dist/config/config";
 
 export interface EmojiObject {
   activeSkinTone: string;
@@ -15,7 +16,8 @@ interface EmojiPickerProps {
 }
 
 const EmojiPicker = ({ onEmojiClick }: EmojiPickerProps) => {
-  const onSelect = (emojiObject: EmojiObject) => {
+  const onSelect: MouseDownEvent = (emojiObject, event) => {
+    event.stopPropagation();
     onEmojiClick && onEmojiClick(emojiObject.emoji);
   };
 

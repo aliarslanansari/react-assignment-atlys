@@ -1,9 +1,9 @@
 import authSliceReducer from "@/redux/slices/authSlice";
 import postFeedSliceReducer from "@/redux/slices/postFeedSlice";
+import usersSliceReducer from "@/redux/slices/usersSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import usersSliceReducer from "./slices/usersSlice";
 
 const persistConfig = {
   key: "root",

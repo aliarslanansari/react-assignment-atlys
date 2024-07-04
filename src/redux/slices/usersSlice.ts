@@ -12,7 +12,7 @@ export interface User {
   createdAt: string;
 }
 
-interface UserState {
+export interface UserState {
   users: User[];
   idCounter: number;
 }

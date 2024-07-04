@@ -15,6 +15,11 @@ export default {
       },
     },
     extend: {
+      screens: {
+        mobile: { max: "639px" },
+        tablet: { min: "640px", max: "1023px" },
+        desktop: { min: "1024px" },
+      },
       fontFamily: {
         inter: ['"Inter"', ...defaultTheme.fontFamily.sans],
       },

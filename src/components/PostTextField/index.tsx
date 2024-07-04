@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import Textfield from "@/components/ui/Textfield";
 import { cn } from "@/utils";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import EmojiPicker from "../EmojiPicker";
 import Button from "../ui/Button";
 import IconWrapper from "../ui/IconWrapper";
@@ -15,7 +15,7 @@ interface PostTextFieldProps {
 
 const PostTextField = ({ className }: PostTextFieldProps) => {
   const [isEmojiPopoverOpen, setIsEmojiPopoverOpen] = useState(false);
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const formik = useFormik({
     validationSchema: postFormSchema,
     initialValues: postFormInitialValues,
@@ -30,12 +30,19 @@ const PostTextField = ({ className }: PostTextFieldProps) => {
     setIsEmojiPopoverOpen(false);
   };
 
+  const focusInputBox = () => {
+    inputRef.current?.focus();
+  };
+
   return (
     <Card className={cn(className)}>
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
         <h2 className="text-lg font-medium leading-none text-white-200">Create post</h2>
         <div>
-          <div className="flex items-center gap-4 rounded-lg bg-black-700 p-4">
+          <div
+            onClick={focusInputBox}
+            className="flex cursor-text items-center gap-4 rounded-lg bg-black-700 p-4"
+          >
             <Popover open={isEmojiPopoverOpen} onOpenChange={setIsEmojiPopoverOpen}>
               <PopoverTrigger>
                 <IconWrapper>{formik.values.emoji}</IconWrapper>
@@ -45,6 +52,7 @@ const PostTextField = ({ className }: PostTextFieldProps) => {
               </PopoverContent>
             </Popover>
             <Textfield
+              ref={inputRef}
               onChange={formik.handleChange}
               name="text"
               autoFocus

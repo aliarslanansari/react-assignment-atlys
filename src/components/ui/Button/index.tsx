@@ -1,4 +1,4 @@
-import { cx } from "class-variance-authority";
+import { cn } from "@/utils";
 
 interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
@@ -13,7 +13,7 @@ const Button = ({ onClick, label, className, type }: ButtonProps) => {
       type={type}
       aria-label={label}
       onClick={onClick}
-      className={cx(
+      className={cn(
         "rounded-md bg-blue-primary p-3 text-center text-base font-medium leading-none outline-none hover:bg-blue-primary/80 focus:bg-blue-primary/80",
         className,
       )}

@@ -1,7 +1,7 @@
 import ChatBubble from "@/assets/svg-components/ChatBubble";
 import DotsHorizontal from "@/assets/svg-components/DotsHorizontal";
 import Card from "@/components/ui/Card";
-import { cx } from "class-variance-authority";
+import { cn } from "@/utils";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import IconWrapper from "../ui/IconWrapper";
@@ -16,7 +16,7 @@ const PostCard = ({ className }: PostCardProps) => {
   const timestamp = "2024-07-02T23:00:00Z";
 
   return (
-    <Card className={cx(className)}>
+    <Card className={cn(className)}>
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <img src="/user-images/user-1.png" className="h-11 w-11 rounded-full" />
@@ -31,7 +31,7 @@ const PostCard = ({ className }: PostCardProps) => {
           <DotsHorizontal />
         </button>
       </div>
-      <div className="bg-black-700 mb-3 flex items-center gap-4 rounded-lg p-4">
+      <div className="mb-3 flex items-center gap-4 rounded-lg bg-black-700 p-4">
         <IconWrapper className="self-start">👋</IconWrapper>
         <p className="text-base font-normal text-white-150">
           Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia

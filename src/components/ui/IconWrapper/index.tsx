@@ -1,4 +1,4 @@
-import { cx } from "class-variance-authority";
+import { cn } from "@/utils";
 import { ReactNode } from "react";
 
 interface IconWrapperProps {
@@ -9,8 +9,8 @@ interface IconWrapperProps {
 const IconWrapper = ({ children, className }: IconWrapperProps) => {
   return (
     <div
-      className={cx(
-        "bg-black-600 flex h-12 min-w-12 items-center justify-center rounded-full",
+      className={cn(
+        "flex h-12 min-w-12 items-center justify-center rounded-full bg-black-600",
         className,
       )}
     >

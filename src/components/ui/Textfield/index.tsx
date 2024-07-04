@@ -1,5 +1,5 @@
 import EyeIcon from "@/assets/svg-components/EyeIcon";
-import { cx } from "class-variance-authority";
+import { cn } from "@/utils";
 import { useId, useState } from "react";
 
 interface TextfieldProps {
@@ -41,13 +41,13 @@ const Textfield = ({
   };
 
   return (
-    <div className={cx("flex flex-col", className)}>
+    <div className={cn("flex flex-col", className)}>
       {(rightLabel || label) && (
         <div className="flex items-end justify-between">
           {label && (
             <label
               htmlFor={id}
-              className={cx(
+              className={cn(
                 "mb-2.5 text-sm font-medium leading-none text-white-200",
                 labelClassName,
               )}
@@ -57,7 +57,7 @@ const Textfield = ({
           )}
           {rightLabel && (
             <div
-              className={cx(
+              className={cn(
                 "mb-2.5 text-xs font-medium leading-none text-white-200",
                 rightLabelClassName,
               )}
@@ -75,7 +75,7 @@ const Textfield = ({
           required={required}
           onChange={onChange}
           value={value}
-          className={cx(
+          className={cn(
             "w-full rounded-md border-2 bg-transparent p-3 outline-none placeholder:text-base placeholder:font-normal placeholder:text-white-150",
             inputClassName,
             {
